@@ -1,0 +1,52 @@
+import random
+
+
+def spela_rond(): #Vilka har spelaren, fungerar med stor och liten bokstav tack vare lower som gör allt till små bokstäver
+    val = input("Välj sten, sax eller påse: ").lower()
+    alternativ = ['sten', 'sax', 'påse']
+
+    if val not in alternativ: # om något annat än just sten, sax, påse skrivs in kommer det vara ett Ogiltigt val
+        print("Ogiltigt val, försök igen.")
+        return spela_rond()
+#
+    datorns_val = random.choice(alternativ) # Datorn gör slumpmässiga val utifrån dators_val (sten sax påse)
+    print(f"Datorn valde: {datorns_val}")
+
+    if val == datorns_val: #båda valde samma värde dvs spelare och dator ==
+        print("Oavgjort!")
+        return 0 # blir det oavgjort kommer värde noll att redovisas
+    elif (val == 'sten' and datorns_val == 'sax') or \
+            (val == 'sax' and datorns_val == 'påse') or \
+            (val == 'påse' and datorns_val == 'sten'):
+        print("Du vann denna rond!")
+        return 1
+    else:
+        print("Datorn vann denna rond!")
+        return -1
+
+
+def main(): # utgångspunkten är att dator och spelare börjar med noll och funktionen av själva spelet (main)
+    spelare_poang = 0
+    dator_poang = 0
+    ronder = 0
+
+    while spelare_poang < 2 and dator_poang < 2:
+        print("\nNy rond!")
+        resultat = spela_rond()
+
+        if resultat == 1:
+            spelare_poang += 1
+        elif resultat == -1:
+            dator_poang += 1
+
+        ronder += 1
+        print(f"Poängställning: Du {spelare_poang} - {dator_poang} Datorn")
+
+    if spelare_poang > dator_poang:
+        print("\nGrattis! Du vann spelet!")
+    else:
+        print("\nTyvärr, datorn vann spelet!")
+
+
+if __name__ == "__main__": # slut på funktionen main
+    main()
